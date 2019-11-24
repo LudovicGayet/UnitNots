@@ -25,8 +25,6 @@ def send_to_queue2(iter):
 
 	for record in iter:
 		data = json.loads(record[1])
-		print(data)
-		print(type(data))
 		topics=[]
 		for topic in topic_list:
 			if data["word"] in topic_list[topic]:
