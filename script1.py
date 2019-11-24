@@ -9,12 +9,15 @@
 ########################################
 
 
-
+import json
 from pathlib import Path
-directory = "./bbc-dataset/sport"
+directory_sport = "./bbc-dataset/sport"
+directory_tech = "./bbc-dataset/tech"
 
 from kafka import KafkaProducer
-producer = KafkaProducer(bootstrap_servers='localhost:9092')
+kafka_host = 'localhost:9092'
+producer = KafkaProducer(bootstrap_servers=kafka_host)
+topic="queue1"
 
 def split_text_to_words(text):
 	from nltk.tokenize import word_tokenize
@@ -36,16 +39,30 @@ def split_text_to_words(text):
 	#print(words[:100]) 
 	return words
 
-for file in Path(directory).iterdir():
+for file in Path(directory_sport).iterdir():
+	print(file)
+	file = open(file, 'rt',encoding="ISO-8859-1")
+	text = file.read()
+	file.close()
+	
+	for word in split_text_to_words(text):
+		data ={}
+		data["source"]=file.name
+		data["word"]=word
+		# send to topic on broker
+		producer.send(topic, key=bytes("sport", encoding='utf-8'), value=json.dumps(data).encode('utf-8'))
+
+
+for file in Path(directory_tech).iterdir():
 	print(file)
 	file = open(file, 'rt',encoding="ISO-8859-1")
 	text = file.read()
 	file.close()
 
 	for word in split_text_to_words(text):
-		# message value and key must be raw bytes
-		word_bytes = bytes(word, encoding='utf-8')
-		file_bytes = bytes(file.name, encoding='utf-8')
+		data ={}
+		data["source"]=file.name
+		data["word"]=word
 		# send to topic on broker
-		producer.send('test', key=file_bytes, value=word_bytes)
+		producer.send(topic, key=bytes("tech", encoding='utf-8'), value=json.dumps(data).encode('utf-8'))
 
