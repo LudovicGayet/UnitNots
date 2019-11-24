@@ -11,23 +11,39 @@ spark = SparkSession \
     .appName("kafka_to_parquet") \
     .getOrCreate()
 # Subscribe to 1 topic
-df = spark \
+df_queue2 = spark \
   .readStream \
   .format("kafka") \
   .option("kafka.bootstrap.servers", "localhost:9092") \
-  .option("subscribe", "queue2,queue3,") \
+  .option("subscribe", "queue2") \
   .option("startingOffsets", "earliest") \
   .load()
 
-df.printSchema()
+df_queue3 = spark \
+  .readStream \
+  .format("kafka") \
+  .option("kafka.bootstrap.servers", "localhost:9092") \
+  .option("subscribe", "queue3") \
+  .option("startingOffsets", "earliest") \
+  .load()
 
-query = df \
+query_queue2 = df_queue2 \
     .selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)") \
     .writeStream \
     .outputMode("append") \
     .format("parquet") \
-    .option("checkpointLocation", "/Users/ludo/Desktop/UntieNots/") \
-    .option("path", "/Users/ludo/Desktop/UntieNots/") \
+    .option("checkpointLocation", "/Users/ludo/Desktop/UntieNots/queue2") \
+    .option("path", "/Users/ludo/Desktop/UntieNots/queue2") \
     .start()
 
-query.awaitTermination()
+query_queue3 = df_queue3 \
+    .selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)") \
+    .writeStream \
+    .outputMode("append") \
+    .format("parquet") \
+    .option("checkpointLocation", "/Users/ludo/Desktop/UntieNots/queue3") \
+    .option("path", "/Users/ludo/Desktop/UntieNots/queue3") \
+    .start()
+
+query_queue2.awaitTermination()
+query_queue3.awaitTermination()
