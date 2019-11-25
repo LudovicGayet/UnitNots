@@ -24,7 +24,7 @@ L'environnement python :
 ### Script 1 : 
 Etape préliminaire de nettoyage du texte (python ntlk).
 Envoie de données dans une queue Kafka(Q1) : {"source": <file_name >, "word": <word>} 
-Dans le "topic" kafka, on garde pour clé notre "topic" (sport ou tech) en clé et en valeur on donne un json contenant les informations voulues. Garder le topic nous permet dans la partie analyse de connaître le veritable topic auquel appartient notre fichier.
+Dans le "topic" kafka, on garde pour clé notre "topic" (sport ou tech) en clé et en valeur on donne un json contenant les informations voulues. Garder le topic nous permet dans la partie analyse de connaître le veritable topic auquel appartient notre fichier.<br>
 ![Résultat du scritp1](https://github.com/LudovicGayet/UntieNots/blob/master/screenshot%20queue1.png)
   
 
