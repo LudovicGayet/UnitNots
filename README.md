@@ -7,6 +7,7 @@ Ce projet contient :
 - Un exemple des fichiers .parquet généré par le script 3 + fichier de gestion des offsets
 - Des captures d'écrans des résultats du script 4
 
+Nous avons essayé de rester au plus proche du projet et des consignes excepté la dernière partie du script 4
 
 L'environnement de développement fut le suivant :
 ```
@@ -49,8 +50,11 @@ Toutes ces données sont disponibles dans les dossiers queue2 et queue3 qui cont
 Ce script s'interesse à l'analyse des données stockées préalablement au format parquet.
 Plusieurs indicateurs sont à fournir:
 ```
-* For each topic find :
+For each topic find :
 - the sources associated with the number of occurrences for each key word.
 - the false positives (sources identified with the keywords that do not belong to the topic) => We assume that a source belongs to a topic if X% of its keywords can be found in the source. (X is an argument of the script).
 - the relevance of each keyword: rate of presence in a source belonging to the topic/ rate of presence in a topic not belonging to the topic / rate of absence in a topic that belonged to the topic
 ```
+
+Nous avons répondu aux deux premier points, pour le troisième nous avons calculer un indicateur différent.
+Ces réponses se basent sur le fichier parquet contenant les données de la queue2. Le fichier de la queue3 n'a pas été utilisé.
