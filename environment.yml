@@ -8,5 +8,6 @@ dependencies:
   - pyspark
   - fastparquet
   - pandas
+  - pyarrow
 prefix: /miniconda3/envs/untienots
 
