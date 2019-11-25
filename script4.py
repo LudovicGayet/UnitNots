@@ -1,3 +1,16 @@
+########################################
+#
+#	SCRIPT 4
+#
+########################################
+#* Open the exported parquet files.
+#* For each topic find :
+#- the sources associated with the number of occurrences for each key word.
+#- the false positives (sources identified with the keywords that do not belong to the topic) => We assume that a source belongs to a topic if X% of its keywords can be found in the source. (X is an argument of the script).
+#- the relevance of each keyword: rate of presence in a source belonging to the topic/ rate of presence in a topic not belonging to the topic / rate of absence in a topic that belonged to the topic
+########################################
+
+#Gestion des packages
 import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
