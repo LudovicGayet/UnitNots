@@ -1,3 +1,13 @@
+########################################
+#
+# SCRIPT 3
+#
+########################################
+#* Read queue Q2 since last offset and save its content in .parquet files 
+#* Read queue Q3 since last offset and save its content in .parquet files
+########################################
+
+#Gestion des packages et dépendances
 import sys
 import os
 import json
@@ -6,11 +16,19 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import explode
 from pyspark.sql.functions import split
 
+# Parquet directory
+queue2_parquet_directory = "./queue2"
+queue3_parquet_directory = "./queue3"
+
+# Création de notre sparkContexte
 spark = SparkSession \
     .builder \
     .appName("kafka_to_parquet") \
     .getOrCreate()
-# Subscribe to 1 topic
+
+# Utilsiation de : Structured Streaming + Kafka Integration Guide (Kafka broker version 0.10.0 or higher)
+
+# Lecture de notre queue2
 df_queue2 = spark \
   .readStream \
   .format("kafka") \
@@ -19,6 +37,7 @@ df_queue2 = spark \
   .option("startingOffsets", "earliest") \
   .load()
 
+# Lecture de notre queue3
 df_queue3 = spark \
   .readStream \
   .format("kafka") \
@@ -27,22 +46,24 @@ df_queue3 = spark \
   .option("startingOffsets", "earliest") \
   .load()
 
+# Création de notre dataframe a partir de la queue2 et stockage sous parquet
 query_queue2 = df_queue2 \
     .selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)") \
     .writeStream \
     .outputMode("append") \
     .format("parquet") \
-    .option("checkpointLocation", "/Users/ludo/Desktop/UntieNots/queue2") \
-    .option("path", "/Users/ludo/Desktop/UntieNots/queue2") \
+    .option("checkpointLocation", queue2_parquet_directory) \
+    .option("path", queue2_parquet_directory) \
     .start()
 
+# Création de notre dataframe a partir de la queue3 et stockage sous parquet
 query_queue3 = df_queue3 \
     .selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)") \
     .writeStream \
     .outputMode("append") \
     .format("parquet") \
-    .option("checkpointLocation", "/Users/ludo/Desktop/UntieNots/queue3") \
-    .option("path", "/Users/ludo/Desktop/UntieNots/queue3") \
+    .option("checkpointLocation", queue3_parquet_directory) \
+    .option("path", queue3_parquet_directory) \
     .start()
 
 query_queue2.awaitTermination()
