@@ -3,12 +3,12 @@
 Ce projet contient :
 - 4 scripts codés en python
 - Un jeu de données provenant de la bbc contenant des articles traitant de sport ou de technology (nos deux topics)
-- Des captures d'écrans des résultats des script 1 et 2
-- Un exemple des fichiers .parquet généré par le script 3 + fichier de gestion des offsets
+- Des captures d'écrans des résultats des scripts 1 et 2
+- Un exemple des fichiers .parquet générés par le script 3 + fichiers de gestion des offsets
 - Des captures d'écrans des résultats du script 4
 
 Nous avons essayé de rester au plus proche du projet et des consignes excepté la dernière partie du script 4. <br>
-Pour ne pas avoir à modifier de chemin, faire un "cd" dans le projet.
+Pour ne pas avoir à modifier de chemins, faire un "cd" dans le projet.
 
 L'environnement de développement fut le suivant :
 ```
@@ -30,7 +30,7 @@ Dans le "topic" kafka, on garde pour clé notre "topic" (sport ou tech) en clé 
   
 
 ### Script 2 : 
-Pour cette partie, nous avons utilisés les topics/mots clés suivants:
+Pour cette partie, nous avons utilisé les topics/mots clés suivants:
 ```
 topic_list = {"sport": ['doping', 'olympic', 'injury','medal','record','title','world','athletic'], \
 		"tech" : ['technology','author','article','computer','hi-tech','software','network','security','phone']}
