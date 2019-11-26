@@ -7,7 +7,8 @@ Ce projet contient :
 - Un exemple des fichiers .parquet généré par le script 3 + fichier de gestion des offsets
 - Des captures d'écrans des résultats du script 4
 
-Nous avons essayé de rester au plus proche du projet et des consignes excepté la dernière partie du script 4
+Nous avons essayé de rester au plus proche du projet et des consignes excepté la dernière partie du script 4. <br>
+Pour ne pas avoir à modifier de chemin, faire un "cd" dans le projet.
 
 L'environnement de développement fut le suivant :
 ```
@@ -47,7 +48,7 @@ Nous persistons les données des queue2 et queue3 au format parquet avec gestion
 Toutes ces données sont disponibles dans les dossiers queue2 et queue3 qui contiennent les fichiers parquets mais aussi les fichiers relatifs aux offsets. <br>
 
 ### Script 4 : 
-Ce script s'interesse à l'analyse des données stockées préalablement au format parquet.
+Ce script s'intéresse à l'analyse des données stockées préalablement au format parquet.
 Plusieurs indicateurs sont à fournir:
 ```
 For each topic find :
@@ -56,5 +57,22 @@ For each topic find :
 - the relevance of each keyword: rate of presence in a source belonging to the topic/ rate of presence in a topic not belonging to the topic / rate of absence in a topic that belonged to the topic
 ```
 
-Nous avons répondu aux deux premier points, pour le troisième nous avons calculer un indicateur différent.
+Nous avons répondu aux deux premiers points, pour le troisième nous avons calculé un indicateur différent.
 Ces réponses se basent sur le fichier parquet contenant les données de la queue2. Le fichier de la queue3 n'a pas été utilisé.
+
+```
+- the sources associated with the number of occurrences for each key word.
+```
+![screenshot script4](https://github.com/LudovicGayet/UntieNots/blob/master/screenshot%20script4%20source%20d'un%20topic.png)
+
+![screenshot script4](https://github.com/LudovicGayet/UntieNots/blob/master/screenshot%20script4%20nb_occurences%20per%20keywords.png)
+```
+- the false positives (sources identified with the keywords that do not belong to the topic) => We assume that a source belongs to a topic if X% of its keywords can be found in the source. (X is an argument of the script).
+```
+![screenshot script4](https://github.com/LudovicGayet/UntieNots/blob/master/screenshot%20script4%20listes%20faux%20positifs.png)
+mais surtout le pourquoi:<br>
+![screenshot script4](https://github.com/LudovicGayet/UntieNots/blob/master/screenshot%20script4%20explication%20faux%20positifs.png)
+```
+- the relevance of each keyword: (presence in a source belonging to the topic) / (presence in general)
+```
+![screenshot script4](https://github.com/LudovicGayet/UntieNots/blob/master/screenshot%20script4%20rate%20of%20good%20presence.png)
